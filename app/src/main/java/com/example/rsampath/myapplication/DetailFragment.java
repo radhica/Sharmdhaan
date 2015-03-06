@@ -6,7 +6,6 @@ package com.example.rsampath.myapplication;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 public class DetailFragment extends Fragment {
 
     public interface onSomeEventListener {
-        public void someEvent(ArrayList<AtomPayment> newObj);
+        public void someEvent(ArrayList<ItemObject> newObj);
     }
 
     onSomeEventListener someEventListener;
@@ -43,7 +42,7 @@ public class DetailFragment extends Fragment {
     Button buttonAdd;
     Button close;
      LinearLayout containerF;
-    public ArrayList<AtomPayment> newItems = new ArrayList<>();
+    public ArrayList<ItemObject> newItems = new ArrayList<>();
 
     @Override
     public View onCreateView(final LayoutInflater inflater,ViewGroup container, Bundle args) {
@@ -67,7 +66,7 @@ public class DetailFragment extends Fragment {
                 price.setText(priceEdit.getText().toString());
                 priceEdit.setText("");
 
-                newItems.add(new AtomPayment(item.getText().toString(),0,Double.valueOf(price.getText().toString())));
+                newItems.add(new ItemObject(item.getText().toString(),0,Double.valueOf(price.getText().toString())));
 
 
                 containerF.addView(addView);

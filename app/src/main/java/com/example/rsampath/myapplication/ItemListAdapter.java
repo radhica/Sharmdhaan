@@ -20,11 +20,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
-public class AtomPayListAdapter extends ArrayAdapter<AtomPayment> {
+public class ItemListAdapter extends ArrayAdapter<ItemObject> {
 
-    protected static final String LOG_TAG = AtomPayListAdapter.class.getSimpleName();
+    protected static final String LOG_TAG = ItemListAdapter.class.getSimpleName();
 
-    public List<AtomPayment> items;
+    public List<ItemObject> items;
     private int layoutResourceId;
     private Context context;
     public static double total = 0.0;
@@ -32,7 +32,7 @@ public class AtomPayListAdapter extends ArrayAdapter<AtomPayment> {
     TextView changeAmount = null;
     EditText givenAmount = null;
 
-    public AtomPayListAdapter(Context context, int layoutResourceId, List<AtomPayment> items, TextView total, EditText given, TextView change) {
+    public ItemListAdapter(Context context, int layoutResourceId, List<ItemObject> items, TextView total, EditText given, TextView change) {
         super(context, layoutResourceId, items);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -148,7 +148,7 @@ public class AtomPayListAdapter extends ArrayAdapter<AtomPayment> {
     }
 
     public static class AtomPaymentHolder {
-        AtomPayment atomPayment;
+        ItemObject atomPayment;
         TextView name;
         TextView quantity;
         ImageButton add;

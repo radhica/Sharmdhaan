@@ -2,16 +2,11 @@ package com.example.rsampath.myapplication;
 
 import android.app.FragmentManager;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -40,8 +35,8 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
     protected EditText given;
     protected TextView change;
 
-    public AtomPayListAdapter adapter;
-    ArrayList<AtomPayment> arrayListOfPayment = new ArrayList<>();
+    public ItemListAdapter adapter;
+    ArrayList<ItemObject> arrayListOfPayment = new ArrayList<>();
 
 
     @Override
@@ -146,14 +141,14 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
 
 
     private void createList(){
-        arrayListOfPayment.add(new AtomPayment("Nachos",0,5.00));
-        arrayListOfPayment.add(new AtomPayment("Popcorn",0,3.5));
-        arrayListOfPayment.add(new AtomPayment("Drink",0,3));
-        arrayListOfPayment.add(new AtomPayment("Fountain",0,4.5));
+        arrayListOfPayment.add(new ItemObject("Nachos",0,5.00));
+        arrayListOfPayment.add(new ItemObject("Popcorn",0,3.5));
+        arrayListOfPayment.add(new ItemObject("Drink",0,3));
+        arrayListOfPayment.add(new ItemObject("Fountain",0,4.5));
     }
 
     private void setupListViewAdapter() {
-        adapter = new AtomPayListAdapter(MainActivity.this, R.layout.atom_pay_list_item, arrayListOfPayment,total,given,change);
+        adapter = new ItemListAdapter(MainActivity.this, R.layout.list_item_row, arrayListOfPayment,total,given,change);
         ListView atomPaysListView = (ListView)findViewById(R.id.EnterPays_atomPaysList);
         atomPaysListView.setAdapter(adapter);
     }
@@ -172,15 +167,15 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
             if(id == R.id.action_refresh) {
                 Toast.makeText(this, "Refresh selected", Toast.LENGTH_SHORT)
                         .show();
-                ArrayList<AtomPayment> saveOldList = new ArrayList<>();
+                ArrayList<ItemObject> saveOldList = new ArrayList<>();
                 total.setText("0.0");
                 given.setText("0.0");
                 change.setText("");
                 adapter.givenAmount.setText("0.0");
                 adapter.totalamount.setText("0.0");
                 adapter.changeAmount.setText("0.0");
-                AtomPayListAdapter.total = 0.0;
-                for(AtomPayment obj : saveOldList)
+                ItemListAdapter.total = 0.0;
+                for(ItemObject obj : saveOldList)
                     obj.setQuantity(0.0);
                 for(int i = 0; i<adapter.items.size();i++)
                     adapter.items.get(i).setQuantity(0.0);
@@ -196,7 +191,7 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
 
 
     @Override
-    public void someEvent(ArrayList<AtomPayment> newObj) {
+    public void someEvent(ArrayList<ItemObject> newObj) {
         Log.d(TAG, "" + newObj.size());
         arrayListOfPayment.addAll(newObj);
         Log.d(TAG, "" + arrayListOfPayment.size());

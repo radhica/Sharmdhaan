@@ -8,14 +8,14 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 
-public class AtomPayment implements Serializable {
+public class ItemObject implements Serializable {
     private static final long serialVersionUID = -5435670920302756945L;
 
     private String name = "";
     private double quantity = 0;
     private double value;
 
-    public AtomPayment(String name, double quantity, double value) {
+    public ItemObject(String name, double quantity, double value) {
         this.setName(name);
         this.setQuantity(quantity);
         this.setValue(value);
