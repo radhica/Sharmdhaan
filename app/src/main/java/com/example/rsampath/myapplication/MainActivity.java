@@ -152,10 +152,12 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
         Log.d(TAG,""+values.size());
 
         if(values.size()==0) {
-            itemDBoperation.addItem(new ItemObject("Nachos", 0, 5.00));
-            itemDBoperation.addItem(new ItemObject("Popcorn", 0, 3.5));
-            itemDBoperation.addItem(new ItemObject("Drink", 0, 3));
-            itemDBoperation.addItem(new ItemObject("Fountain", 0, 4.5));
+            arrayListOfPayment.add(new ItemObject("Nachos", 0, 5.00));
+            arrayListOfPayment.add(new ItemObject("Popcorn", 0, 3.5));
+            arrayListOfPayment.add(new ItemObject("Drink", 0, 3));
+            arrayListOfPayment.add(new ItemObject("Fountain", 0, 4.5));
+            for(ItemObject itemObject : arrayListOfPayment)
+                itemDBoperation.addItem(itemObject);
         }
         else{
             arrayListOfPayment.clear();
@@ -216,6 +218,7 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
 
         Log.d(TAG, "NewCur" + arrayListOfPayment.size());
         Log.d(TAG,"DB"+itemDBoperation.getAll().size());
+        Log.d(TAG,"Delete"+success);
         adapter.notifyDataSetChanged();
     }
 

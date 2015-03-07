@@ -50,6 +50,8 @@ public class ItemListAdapter extends ArrayAdapter<ItemObject> {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         row = inflater.inflate(layoutResourceId, parent, false);
 
+        Log.d(LOG_TAG,""+items.get(position).getValue());
+
         holder.atomPayment = items.get(position);
         holder.add = (ImageButton) row.findViewById(R.id.add);
         holder.remove = (ImageButton) row.findViewById(R.id.remove);

@@ -74,8 +74,8 @@ public class ItemOperations {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            ItemObject student = parseItem(cursor);
-            items.add(student);
+            ItemObject item = parseItem(cursor);
+            items.add(item);
             cursor.moveToNext();
         }
 
@@ -87,6 +87,7 @@ public class ItemOperations {
         ItemObject itemObject = new ItemObject();
         itemObject.setId((cursor.getInt(0)));
         itemObject.setName(cursor.getString(1));
+        itemObject.setValue(Double.parseDouble(cursor.getString(2)));
         return itemObject;
     }
 }
