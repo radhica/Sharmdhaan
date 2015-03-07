@@ -14,6 +14,19 @@ public class ItemObject implements Serializable {
     private String name = "";
     private double quantity = 0;
     private double value;
+    private int id;
+
+    public ItemObject() {
+
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public ItemObject(String name, double quantity, double value) {
         this.setName(name);

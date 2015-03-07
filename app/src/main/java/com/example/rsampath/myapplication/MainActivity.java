@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity implements DetailFragment.onSomeEventListener {
@@ -38,6 +39,9 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
     public ItemListAdapter adapter;
     ArrayList<ItemObject> arrayListOfPayment = new ArrayList<>();
 
+    private ItemOperations itemDBoperation;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,20 +58,22 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        LayoutInflater inflator = LayoutInflater.from(this);
-        View v = inflator.inflate(R.layout.title_view, null);
 
-//if you need to customize anything else about the text, do it here.
-//I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
-        ((CustomTextView)v.findViewById(R.id.title)).setText("Shaarm");
+// trying to style action bar
+//        LayoutInflater inflator = LayoutInflater.from(this);
+//        View v = inflator.inflate(R.layout.title_view, null);
+//
+//        ((CustomTextView)v.findViewById(R.id.title)).setText("Shaarm");
+//
+//        this.getActionBar().setCustomView(v);
 
-//assign the view to the actionbar
-        this.getActionBar().setCustomView(v);
+        itemDBoperation = new ItemOperations(this);
+        itemDBoperation.open();
 
-        createList();
+
         setUpTextViews();
+        createList();
 
-        setupListViewAdapter();
         Log.d(TAG, total.getText().toString());
 
     }
@@ -141,10 +147,21 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
 
 
     private void createList(){
-        arrayListOfPayment.add(new ItemObject("Nachos",0,5.00));
-        arrayListOfPayment.add(new ItemObject("Popcorn",0,3.5));
-        arrayListOfPayment.add(new ItemObject("Drink",0,3));
-        arrayListOfPayment.add(new ItemObject("Fountain",0,4.5));
+        List values = itemDBoperation.getAll();
+        Log.d(TAG,""+values.size());
+
+        if(values.size()==0) {
+            arrayListOfPayment.add(0, itemDBoperation.addItem(new ItemObject("Nachos", 0, 5.00)));
+            arrayListOfPayment.add(1, itemDBoperation.addItem(new ItemObject("Popcorn", 0, 3.5)));
+            arrayListOfPayment.add(2, itemDBoperation.addItem(new ItemObject("Drink", 0, 3)));
+            arrayListOfPayment.add(3, itemDBoperation.addItem(new ItemObject("Fountain", 0, 4.5)));
+        }
+        else{
+            arrayListOfPayment.clear();
+            arrayListOfPayment.addAll(values);
+
+        }
+        setupListViewAdapter();
     }
 
     private void setupListViewAdapter() {
@@ -167,7 +184,6 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
             if(id == R.id.action_refresh) {
                 Toast.makeText(this, "Refresh selected", Toast.LENGTH_SHORT)
                         .show();
-                ArrayList<ItemObject> saveOldList = new ArrayList<>();
                 total.setText("0.0");
                 given.setText("0.0");
                 change.setText("");
@@ -175,11 +191,8 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
                 adapter.totalamount.setText("0.0");
                 adapter.changeAmount.setText("0.0");
                 ItemListAdapter.total = 0.0;
-                for(ItemObject obj : saveOldList)
-                    obj.setQuantity(0.0);
                 for(int i = 0; i<adapter.items.size();i++)
                     adapter.items.get(i).setQuantity(0.0);
-                adapter.notifyDataSetChanged();
                 return true;
 
             }
@@ -192,9 +205,15 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
 
     @Override
     public void someEvent(ArrayList<ItemObject> newObj) {
-        Log.d(TAG, "" + newObj.size());
-        arrayListOfPayment.addAll(newObj);
-        Log.d(TAG, "" + arrayListOfPayment.size());
+        Log.d(TAG, "New" + newObj.size());
+        Log.d(TAG, "Cur" + arrayListOfPayment.size());
+        for(int i = arrayListOfPayment.size(), j = 0; i <= (arrayListOfPayment.size()+newObj.size()) -1; i++,j++) {
+            if (j < newObj.size()) {
+                arrayListOfPayment.add(i, itemDBoperation.addItem(newObj.get(j)));
+            }
+        }
+        Log.d(TAG, "NewCur" + arrayListOfPayment.size());
+        Log.d(TAG,"DB"+itemDBoperation.getAll().size());
         adapter.notifyDataSetChanged();
     }
 
