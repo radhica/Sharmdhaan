@@ -196,6 +196,9 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
                 ItemListAdapter.total = 0.0;
                 for(int i = 0; i<adapter.items.size();i++)
                     adapter.items.get(i).setQuantity(0.0);
+                for(ItemObject itemObject : arrayListOfPayment)
+                    itemObject.setQuantity(0.0);
+                adapter.notifyDataSetChanged();
                 return true;
 
 
