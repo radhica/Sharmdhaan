@@ -33,7 +33,7 @@ public class ItemOperations {
         dbHelper.close();
     }
 
-    public ItemObject addItem(ItemObject itemObject) {
+    public void addItem(ItemObject itemObject) {
 
         ContentValues values = new ContentValues();
 
@@ -51,14 +51,19 @@ public class ItemOperations {
 
         ItemObject newComment = parseItem(cursor);
         cursor.close();
-        return newComment;
+        //return newComment;
     }
+
 
     public void deleteItem(ItemObject comment) {
         long id = comment.getId();
         System.out.println("Comment deleted with id: " + id);
         database.delete(DataBaseWrapper.ITEMS, DataBaseWrapper.ITEM_ID
                 + " = " + id, null);
+    }
+
+    public int deleteAll(){
+        return database.delete(DataBaseWrapper.ITEMS, null, null);
     }
 
     public List getAll() {

@@ -147,14 +147,15 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
 
 
     private void createList(){
+
         List values = itemDBoperation.getAll();
         Log.d(TAG,""+values.size());
 
         if(values.size()==0) {
-            arrayListOfPayment.add(0, itemDBoperation.addItem(new ItemObject("Nachos", 0, 5.00)));
-            arrayListOfPayment.add(1, itemDBoperation.addItem(new ItemObject("Popcorn", 0, 3.5)));
-            arrayListOfPayment.add(2, itemDBoperation.addItem(new ItemObject("Drink", 0, 3)));
-            arrayListOfPayment.add(3, itemDBoperation.addItem(new ItemObject("Fountain", 0, 4.5)));
+            itemDBoperation.addItem(new ItemObject("Nachos", 0, 5.00));
+            itemDBoperation.addItem(new ItemObject("Popcorn", 0, 3.5));
+            itemDBoperation.addItem(new ItemObject("Drink", 0, 3));
+            itemDBoperation.addItem(new ItemObject("Fountain", 0, 4.5));
         }
         else{
             arrayListOfPayment.clear();
@@ -195,6 +196,7 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
                     adapter.items.get(i).setQuantity(0.0);
                 return true;
 
+
             }
             if(mDrawerToggle.onOptionsItemSelected(item))
                 return true;
@@ -207,11 +209,11 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
     public void someEvent(ArrayList<ItemObject> newObj) {
         Log.d(TAG, "New" + newObj.size());
         Log.d(TAG, "Cur" + arrayListOfPayment.size());
-        for(int i = arrayListOfPayment.size(), j = 0; i <= (arrayListOfPayment.size()+newObj.size()) -1; i++,j++) {
-            if (j < newObj.size()) {
-                arrayListOfPayment.add(i, itemDBoperation.addItem(newObj.get(j)));
-            }
-        }
+        int success = itemDBoperation.deleteAll();
+        arrayListOfPayment.addAll(newObj);
+        for(ItemObject newItemObj : arrayListOfPayment)
+               itemDBoperation.addItem(newItemObj);
+
         Log.d(TAG, "NewCur" + arrayListOfPayment.size());
         Log.d(TAG,"DB"+itemDBoperation.getAll().size());
         adapter.notifyDataSetChanged();
