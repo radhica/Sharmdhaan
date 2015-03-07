@@ -91,7 +91,7 @@ public class ItemListAdapter extends ArrayAdapter<ItemObject> {
                     total -= holder.atomPayment.getValue();
                     holder.quantity.setText(String.valueOf(quantity));
                 } else {
-                    holder.atomPayment.setQuantity(0.0);
+                    holder.atomPayment.setQuantity(0);
                 }
                 totalamount.setText(String.valueOf(total));
                 Log.d(LOG_TAG, " " + quantity + " " + total + " " + holder.atomPayment.getValue() + " " + holder.atomPayment.getName());

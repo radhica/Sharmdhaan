@@ -8,7 +8,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity implements DetailFragment.onSomeEventListener {
+public class MainActivity extends ActionBarActivity implements AddItemFragment.onSomeEventListener {
 
     private static final String TAG = MainActivity.class.getCanonicalName();
     private ListView mDrawerList;
@@ -93,7 +92,7 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
     }
 
     private void addDrawerItems() {
-        String[] osArray = { "Add Items" };
+        String[] osArray = { "Add Items", "Delete Items" };
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
 
@@ -102,9 +101,20 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
                 mDrawerLayout.closeDrawers();
-                DetailFragment detail = new DetailFragment();
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, detail).addToBackStack(null).commit();
+
+                switch(position) {
+                    case 0:   AddItemFragment addItem = new AddItemFragment();
+                    fragmentManager.beginTransaction().replace(R.id.content_frame, addItem).addToBackStack(null).commit();
+                        break;
+                    case 1:
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelableArrayList("arraylist", arrayListOfPayment);
+                        DeleteItemFragment deleteItem = new DeleteItemFragment();
+                        deleteItem.setArguments(bundle);
+                        fragmentManager.beginTransaction().replace(R.id.content_frame, deleteItem).addToBackStack(null).commit();
+                        break;
+                }
             }
         });
     }
@@ -163,6 +173,9 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
             arrayListOfPayment.clear();
             arrayListOfPayment.addAll(values);
 
+            for(ItemObject newItemObj : arrayListOfPayment)
+                Log.d(TAG,""+newItemObj.getId());
+
         }
         setupListViewAdapter();
     }
@@ -195,9 +208,9 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
                 adapter.changeAmount.setText("0.0");
                 ItemListAdapter.total = 0.0;
                 for(int i = 0; i<adapter.items.size();i++)
-                    adapter.items.get(i).setQuantity(0.0);
+                    adapter.items.get(i).setQuantity(0);
                 for(ItemObject itemObject : arrayListOfPayment)
-                    itemObject.setQuantity(0.0);
+                    itemObject.setQuantity(0);
                 adapter.notifyDataSetChanged();
                 return true;
 
@@ -219,10 +232,23 @@ public class MainActivity extends ActionBarActivity implements DetailFragment.on
         for(ItemObject newItemObj : arrayListOfPayment)
                itemDBoperation.addItem(newItemObj);
 
+
         Log.d(TAG, "NewCur" + arrayListOfPayment.size());
         Log.d(TAG,"DB"+itemDBoperation.getAll().size());
         Log.d(TAG,"Delete"+success);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        itemDBoperation.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        itemDBoperation.close();
+        super.onPause();
     }
 
 

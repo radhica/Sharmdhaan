@@ -8,16 +8,27 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 
-public class ItemObject implements Serializable {
+public class ItemObject implements Parcelable {
     private static final long serialVersionUID = -5435670920302756945L;
 
     private String name = "";
-    private double quantity = 0;
+    private long quantity = 0;
     private double value;
     private int id;
 
     public ItemObject() {
 
+    }
+
+    public ItemObject(Parcel dataParcel){
+        id = dataParcel.readInt();
+        name = dataParcel.readString();
+
+    }
+
+    public ItemObject(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public long getId() {
@@ -28,7 +39,7 @@ public class ItemObject implements Serializable {
         this.id = id;
     }
 
-    public ItemObject(String name, double quantity, double value) {
+    public ItemObject(String name, long quantity, double value) {
         this.setName(name);
         this.setQuantity(quantity);
         this.setValue(value);
@@ -43,11 +54,11 @@ public class ItemObject implements Serializable {
     }
 
 
-    public double getQuantity() {
+    public long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(long quantity) {
         this.quantity = quantity;
     }
 
@@ -67,5 +78,27 @@ public class ItemObject implements Serializable {
     public double decrement(){
         return  --quantity;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeValue(id);
+        parcel.writeValue(name);
+    }
+
+    public static final Parcelable.Creator<ItemObject> CREATOR
+            = new Parcelable.Creator<ItemObject>() {
+        public ItemObject createFromParcel(Parcel in) {
+            return new ItemObject(in);
+        }
+
+        public ItemObject[] newArray(int size) {
+            return new ItemObject[size];
+        }
+    };
 
 }

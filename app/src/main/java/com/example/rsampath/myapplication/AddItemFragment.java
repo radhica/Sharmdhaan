@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class DetailFragment extends Fragment {
+public class AddItemFragment extends Fragment {
 
     public interface onSomeEventListener {
         public void someEvent(ArrayList<ItemObject> newObj);
@@ -46,7 +46,7 @@ public class DetailFragment extends Fragment {
 
     @Override
     public View onCreateView(final LayoutInflater inflater,ViewGroup container, Bundle args) {
-        View view = inflater.inflate(R.layout.menu_detail_fragment, container, false);
+        View view = inflater.inflate(R.layout.add_item_fragment, container, false);
         buttonAdd = (Button) view.findViewById(R.id.addButton);
         close = (Button) view.findViewById(R.id.Close);
         containerF = (LinearLayout)view.findViewById(R.id.container);
