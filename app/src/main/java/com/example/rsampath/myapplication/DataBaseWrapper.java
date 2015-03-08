@@ -4,9 +4,9 @@ package com.example.rsampath.myapplication;
  * Created by rsampath on 3/6/15.
  */
 
-        import android.content.Context;
-        import android.database.sqlite.SQLiteDatabase;
-        import android.database.sqlite.SQLiteOpenHelper;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 public class DataBaseWrapper extends SQLiteOpenHelper {
 

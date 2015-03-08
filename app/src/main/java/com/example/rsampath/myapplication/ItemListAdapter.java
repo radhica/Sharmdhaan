@@ -3,7 +3,6 @@ package com.example.rsampath.myapplication;
 /**
  * Created by rsampath on 3/5/15.
  */
-import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,6 +17,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import java.util.List;
 
 
 public class ItemListAdapter extends ArrayAdapter<ItemObject> {
@@ -49,8 +50,6 @@ public class ItemListAdapter extends ArrayAdapter<ItemObject> {
 
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         row = inflater.inflate(layoutResourceId, parent, false);
-
-        Log.d(LOG_TAG,""+items.get(position).getValue());
 
         holder.atomPayment = items.get(position);
         holder.add = (ImageButton) row.findViewById(R.id.add);

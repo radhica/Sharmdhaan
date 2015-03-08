@@ -35,8 +35,6 @@ public class AddItemFragment extends Fragment {
         }
     }
 
-
-
     EditText itemEdit;
     EditText priceEdit;
     Button buttonAdd;
@@ -67,7 +65,6 @@ public class AddItemFragment extends Fragment {
                 priceEdit.setText("");
 
                 newItems.add(new ItemObject(item.getText().toString(),0,Double.valueOf(price.getText().toString())));
-
 
                 containerF.addView(addView);
             }});

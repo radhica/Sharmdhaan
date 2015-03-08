@@ -1,10 +1,8 @@
 package com.example.rsampath.myapplication;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.view.View;
 
 /**
  * Created by rsampath on 3/6/15.

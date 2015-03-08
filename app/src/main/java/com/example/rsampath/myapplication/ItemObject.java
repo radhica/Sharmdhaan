@@ -3,10 +3,9 @@ package com.example.rsampath.myapplication;
 /**
  * Created by rsampath on 3/5/15.
  */
+
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.io.Serializable;
 
 public class ItemObject implements Parcelable {
     private static final long serialVersionUID = -5435670920302756945L;

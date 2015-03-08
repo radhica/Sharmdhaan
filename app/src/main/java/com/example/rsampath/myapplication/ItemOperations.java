@@ -4,14 +4,14 @@ package com.example.rsampath.myapplication;
  * Created by rsampath on 3/6/15.
  */
 
-        import java.util.ArrayList;
-        import java.util.List;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 
-        import android.content.ContentValues;
-        import android.content.Context;
-        import android.database.Cursor;
-        import android.database.SQLException;
-        import android.database.sqlite.SQLiteDatabase;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemOperations {
 
@@ -55,8 +55,8 @@ public class ItemOperations {
     }
 
 
-    public void deleteItem(ItemObject comment) {
-        long id = comment.getId();
+    public void deleteItem(long id) {
+       // long id = comment.getId();
         System.out.println("Comment deleted with id: " + id);
         database.delete(DataBaseWrapper.ITEMS, DataBaseWrapper.ITEM_ID
                 + " = " + id, null);
