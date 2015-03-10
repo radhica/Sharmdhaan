@@ -97,8 +97,8 @@ public class MainActivity extends ActionBarActivity implements AddItemFragment.a
     }
 
     private void addDrawerItems() {
-        String[] osArray = { "Add Items", "Delete Items" };
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        String[] osArray = { "Add Items", "Delete Items", "View Items" };
+        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -107,17 +107,24 @@ public class MainActivity extends ActionBarActivity implements AddItemFragment.a
                 Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
                 mDrawerLayout.closeDrawers();
                 FragmentManager fragmentManager = getFragmentManager();
+                Bundle bundle = new Bundle();
+
 
                 switch(position) {
                     case 0:   AddItemFragment addItem = new AddItemFragment();
                     fragmentManager.beginTransaction().replace(R.id.content_frame, addItem).addToBackStack(null).commit();
                         break;
                     case 1:
-                        Bundle bundle = new Bundle();
                         bundle.putParcelableArrayList("arraylist", arrayListOfPayment);
                         DeleteItemFragment deleteItem = new DeleteItemFragment();
                         deleteItem.setArguments(bundle);
                         fragmentManager.beginTransaction().replace(R.id.content_frame, deleteItem).addToBackStack(null).commit();
+                        break;
+                    case 2:
+                        bundle.putParcelableArrayList("arraylist", arrayListOfPayment);
+                        ViewItemsFragment viewItemsFragment = new ViewItemsFragment();
+                        viewItemsFragment.setArguments(bundle);
+                        fragmentManager.beginTransaction().replace(R.id.content_frame, viewItemsFragment).addToBackStack(null).commit();
                         break;
                 }
             }
