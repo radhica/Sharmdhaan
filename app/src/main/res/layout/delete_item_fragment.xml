@@ -4,12 +4,54 @@
     android:layout_height="fill_parent"
     android:background="@android:color/white"
     android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#167ABF"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Delete Items"
+            android:padding="5dp"
+            android:layout_margin="10dp"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:layout_margin="10dp"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.5"
+            android:text="Item"
+            android:textStyle="bold"
+
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:text="Price"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/list_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_margin="10dp"
         />
 
 
@@ -17,6 +59,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/closeButton"
-        android:text="Close"
+        android:text="Delete and Return"
         />
 </LinearLayout>

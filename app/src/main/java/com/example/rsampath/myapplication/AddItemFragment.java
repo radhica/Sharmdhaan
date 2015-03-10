@@ -7,17 +7,22 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class AddItemFragment extends Fragment {
+
+    private static final String TAG = AddItemFragment.class.getCanonicalName();
 
     public interface addItemEventListener {
         public void addItemEvent(ArrayList<ItemObject> newObj);
@@ -39,7 +44,7 @@ public class AddItemFragment extends Fragment {
     EditText priceEdit;
     Button buttonAdd;
     Button close;
-     LinearLayout containerF;
+    LinearLayout containerF;
     public ArrayList<ItemObject> newItems = new ArrayList<>();
 
     @Override
@@ -64,9 +69,17 @@ public class AddItemFragment extends Fragment {
                 price.setText(priceEdit.getText().toString());
                 priceEdit.setText("");
 
-                newItems.add(new ItemObject(item.getText().toString(),0,Double.valueOf(price.getText().toString())));
+                String itemNewName = item.getText().toString();
+                String itemNewPrice = price.getText().toString();
 
-                containerF.addView(addView);
+                if(!isEmpty(itemNewName) && !isEmpty(itemNewPrice) && isNumeric(itemNewPrice)) {
+                    Log.d(TAG," "+isEmpty(itemNewName)+""+isEmpty(itemNewPrice)+""+isNumeric(itemNewPrice) );
+                    Double itemNewPriceDouble = Double.parseDouble(itemNewPrice);
+                    newItems.add(new ItemObject(itemNewName, 0, itemNewPriceDouble));
+                    containerF.addView(addView);
+                }
+                else Toast.makeText(getActivity(),"Enter valid details",Toast.LENGTH_LONG).show();
+
             }});
 
         close.setOnClickListener(new View.OnClickListener() {
@@ -80,5 +93,15 @@ public class AddItemFragment extends Fragment {
 
 
     return view;
+    }
+
+    private boolean isNumeric(String str)
+    {
+        return str.matches("-?\\d+(\\.\\d+)?");
+    }
+
+    private boolean isEmpty(String str)
+    {
+        return str.length()==0;
     }
 }

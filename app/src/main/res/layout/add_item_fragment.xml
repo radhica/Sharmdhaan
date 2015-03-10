@@ -5,24 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
-        android:id="@+id/change_container"
         android:layout_width="match_parent"
-        android:layout_height="61dp"
-        android:orientation="horizontal">
-        <Button
+        android:layout_height="wrap_content"
+        android:background="#167ABF"
+        >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Add Items"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        />
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:layout_margin="10dp"
+        >
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/addButton"
-            android:text="Add"
+            android:layout_weight="2.5"
+            android:text="Item"
+            android:textStyle="bold"
+
             />
 
-        <Button
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/Close"
-            android:text="Close"
+            android:layout_weight="1.5"
+            android:text="Price"
+            android:textStyle="bold"
             />
 
     </LinearLayout>
@@ -30,25 +48,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight="0.37"
+        android:weightSum="4"
         >
         <EditText
             android:id="@+id/item"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2.5"
 
             android:layout_height="wrap_content"/>
         <EditText
             android:id="@+id/price"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:background="@drawable/edittext_border"
+            android:inputType="numberDecimal"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:id="@+id/addButton"
+            android:text="+"
+            />
     </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        >
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="3.05">
+        android:padding="10dp"
+        android:layout_margin="10dp">
     </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Close"
+        android:text="Save and Return"
+        />
 </LinearLayout>

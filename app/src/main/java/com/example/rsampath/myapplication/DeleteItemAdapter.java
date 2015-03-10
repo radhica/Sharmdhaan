@@ -29,8 +29,8 @@ public class DeleteItemAdapter extends ArrayAdapter {
 
     /*private view holder class*/
     private class ViewHolder {
-        TextView txtId;
         TextView txtName;
+        TextView txtPrice;
         CheckBox chk;
     }
 
@@ -45,6 +45,7 @@ public class DeleteItemAdapter extends ArrayAdapter {
             convertView = mInflater.inflate(resourceId, parent,false);
             holder = new ViewHolder();
             holder.txtName = (TextView) convertView.findViewById(R.id.title);
+            holder.txtPrice = (TextView) convertView.findViewById(R.id.price);
             holder.chk = (CheckBox) convertView.findViewById(R.id.checkbox);
             holder.chk
                     .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -58,12 +59,14 @@ public class DeleteItemAdapter extends ArrayAdapter {
 
             convertView.setTag(holder);
             convertView.setTag(R.id.title, holder.txtName);
+            convertView.setTag(R.id.price, holder.txtPrice);
             convertView.setTag(R.id.checkbox, holder.chk);
         } else
             holder = (ViewHolder) convertView.getTag();
 
 
         holder.txtName.setText(rowItem.getName());
+        holder.txtPrice.setText(String.valueOf(rowItem.getValue()));
         holder.chk.setChecked(rowItem.isSelected());
 
 

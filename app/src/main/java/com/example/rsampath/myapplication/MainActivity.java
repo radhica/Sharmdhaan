@@ -1,6 +1,9 @@
 package com.example.rsampath.myapplication;
 
 import android.app.FragmentManager;
+import android.content.ClipData;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -19,6 +22,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,18 +33,16 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity implements AddItemFragment.addItemEventListener, DeleteItemFragment.deleteItemEventListener {
 
     private static final String TAG = MainActivity.class.getCanonicalName();
+    public AddItemAdapter adapter;
+    protected TextView total;
+    protected EditText given;
+    protected TextView change;
+    ArrayList<ItemObject> arrayListOfPayment = new ArrayList<>();
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle;
-    protected TextView total;
-    protected EditText given;
-    protected TextView change;
-
-    public AddItemAdapter adapter;
-    ArrayList<ItemObject> arrayListOfPayment = new ArrayList<>();
-
     private DatabaseItemOperations itemDBoperation;
 
 
@@ -54,6 +59,7 @@ public class MainActivity extends ActionBarActivity implements AddItemFragment.a
         addDrawerItems();
         setupDrawer();
 
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -66,12 +72,14 @@ public class MainActivity extends ActionBarActivity implements AddItemFragment.a
 //
 //        this.getActionBar().setCustomView(v);
 
+
         itemDBoperation = new DatabaseItemOperations(this);
         itemDBoperation.open();
 
-
         setUpTextViews();
         createList();
+
+
 
         Log.d(TAG, total.getText().toString());
 
@@ -86,9 +94,6 @@ public class MainActivity extends ActionBarActivity implements AddItemFragment.a
         total.setTypeface(typeFace);
         given.setTypeface(typeFace);
         change.setTypeface(typeFace);
-
-
-
     }
 
     private void addDrawerItems() {
@@ -158,14 +163,15 @@ public class MainActivity extends ActionBarActivity implements AddItemFragment.a
 
     private void createList(){
 
-        List values = itemDBoperation.getAll();
-        Log.d(TAG,""+values.size());
+//        List values = itemDBoperation.getAll();
+        List values = readList();
 
-        if(values.size()==0) {
+        if(values == null) {
             arrayListOfPayment.add(new ItemObject("Nachos", 0, 5.00));
             arrayListOfPayment.add(new ItemObject("Popcorn", 0, 3.5));
             arrayListOfPayment.add(new ItemObject("Drink", 0, 3));
             arrayListOfPayment.add(new ItemObject("Fountain", 0, 4.5));
+            writeList();
             for(ItemObject itemObject : arrayListOfPayment)
                 itemDBoperation.addItem(itemObject);
         }
@@ -231,7 +237,8 @@ public class MainActivity extends ActionBarActivity implements AddItemFragment.a
         arrayListOfPayment.addAll(newObj);
         for(ItemObject newItemObj : arrayListOfPayment)
                itemDBoperation.addItem(newItemObj);
-
+        writeList();
+        Log.d(TAG,"SP: "+readList().size());
 
         Log.d(TAG, "NewCur" + arrayListOfPayment.size());
         Log.d(TAG,"DB"+itemDBoperation.getAll().size());
@@ -258,8 +265,29 @@ public class MainActivity extends ActionBarActivity implements AddItemFragment.a
         for(ItemObject newItemObj : idList) {
             itemDBoperation.deleteItem(newItemObj.getId());
             arrayListOfPayment.remove(newItemObj);
-            Log.d(TAG,""+newItemObj.getId());
+            Log.d(TAG, "" + newItemObj.getId());
         }
+        writeList();
+        Log.d(TAG,"SP: "+readList().size());
         adapter.notifyDataSetChanged();
+    }
+
+
+    public void writeList()
+    {
+        SharedPreferences  mPrefs = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        String json = new Gson().toJson(arrayListOfPayment);
+        prefsEditor.putString("MyItemsArray", json);
+        prefsEditor.commit();
+    }
+
+    public  List<ItemObject> readList()
+    {
+        SharedPreferences  mPrefs = getPreferences(MODE_PRIVATE);
+        String connectionsJSONString = mPrefs.getString("MyItemsArray", null);
+        Type type = new TypeToken<List<ItemObject>>(){}.getType();
+        List<ItemObject> data = new Gson().fromJson(connectionsJSONString, type);
+        return data;
     }
 }

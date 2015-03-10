@@ -110,11 +110,15 @@ public class AddItemAdapter extends ArrayAdapter<ItemObject> {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (Double.valueOf(givenAmount.getText().toString()) > 0.0) {
-
-                    changeAmount.setText(String.valueOf(Double.valueOf(givenAmount.getText().toString()) -
-                            Double.valueOf(totalamount.getText().toString())));
-                }            }
+                Double amtGiven = 0.0;
+                Double amtTotal = Double.valueOf(totalamount.getText().toString());
+                if(Double.valueOf(givenAmount.getText().toString()).equals(""))
+                    amtGiven = 0.0;
+                else
+                amtGiven = Double.valueOf(givenAmount.getText().toString());
+                if (amtGiven > 0.0)
+                    changeAmount.setText(String.valueOf(amtGiven-amtTotal));
+            }
         });
 
         totalamount.addTextChangedListener(new TextWatcher() {
@@ -130,12 +134,12 @@ public class AddItemAdapter extends ArrayAdapter<ItemObject> {
 
             @Override
             public void afterTextChanged(Editable editable) {
-
-                if (Double.valueOf(givenAmount.getText().toString()) > 0.0) {
-                    changeAmount.setText(String.valueOf((Double.valueOf(givenAmount.getText().toString()) -
-                            Double.valueOf(totalamount.getText().toString()))));
-                }
-
+                Double amtGiven = 0.0;
+                Double amtTotal = Double.valueOf(totalamount.getText().toString());
+                if(Double.valueOf(givenAmount.getText().toString()).equals(""))
+                    amtGiven = 0.0;
+                if (amtGiven > 0.0)
+                    changeAmount.setText(String.valueOf(amtGiven-amtTotal));
             }
         });
 
