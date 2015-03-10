@@ -21,9 +21,9 @@ import android.widget.TextView;
 import java.util.List;
 
 
-public class ItemListAdapter extends ArrayAdapter<ItemObject> {
+public class AddItemAdapter extends ArrayAdapter<ItemObject> {
 
-    protected static final String LOG_TAG = ItemListAdapter.class.getSimpleName();
+    protected static final String LOG_TAG = AddItemAdapter.class.getSimpleName();
 
     public List<ItemObject> items;
     private int layoutResourceId;
@@ -33,7 +33,7 @@ public class ItemListAdapter extends ArrayAdapter<ItemObject> {
     TextView changeAmount = null;
     EditText givenAmount = null;
 
-    public ItemListAdapter(Context context, int layoutResourceId, List<ItemObject> items, TextView total, EditText given, TextView change) {
+    public AddItemAdapter(Context context, int layoutResourceId, List<ItemObject> items, TextView total, EditText given, TextView change) {
         super(context, layoutResourceId, items);
         this.layoutResourceId = layoutResourceId;
         this.context = context;

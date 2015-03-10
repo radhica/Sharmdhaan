@@ -7,6 +7,7 @@ package com.example.rsampath.myapplication;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.ClipData;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,10 +27,10 @@ public class DeleteItemFragment extends Fragment {
     ArrayList<ItemObject> itemObjectList = new ArrayList<>();
     ListView listView;
     private Button close;
-    private Button delete;
-    private EditText itemIdEntered;
-    private ItemOperations itemDBoperation;
+    private DatabaseItemOperations itemDBoperation;
     private String id;
+    public ArrayList<ItemObject> newItems = new ArrayList<>();
+
 
 
     @Override
@@ -38,29 +39,32 @@ public class DeleteItemFragment extends Fragment {
         itemObjectList = getArguments().getParcelableArrayList("arraylist");
     }
 
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        try {
-//            someEventListener = (onSomeEventListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString() + " must implement onSomeEventListener");
-//        }
-//    }
+    public interface deleteItemEventListener {
+        public void deleteItemEvent(ArrayList<ItemObject> idList);
+    }
+
+    deleteItemEventListener deleteItemEventListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            deleteItemEventListener = (deleteItemEventListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement onSomeEventListener");
+        }
+    }
 
 
     @Override
     public View onCreateView(final LayoutInflater inflater,ViewGroup container, Bundle args) {
         View view = inflater.inflate(R.layout.delete_item_fragment, container, false);
 
-        itemDBoperation = new ItemOperations(getActivity());
+        itemDBoperation = new DatabaseItemOperations(getActivity());
         itemDBoperation.open();
 
 
         close = (Button) view.findViewById(R.id.closeButton);
-        delete = (Button) view.findViewById(R.id.deleteButton);
-        itemIdEntered = (EditText) view.findViewById(R.id.enteredId);
-
         listView = (ListView) view.findViewById(R.id.list_items);
         final DeleteItemAdapter adapter = new DeleteItemAdapter(getActivity(),
                 R.layout.fragment_delete_row, itemObjectList);
@@ -71,36 +75,13 @@ public class DeleteItemFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentManager fm = getFragmentManager();
+                for(ItemObject itemObject: itemObjectList){
+                    if(itemObject.isSelected()){
+                         newItems.add(itemObject);
+                    }
+                }
+                deleteItemEventListener.deleteItemEvent(newItems);
                 fm.popBackStack();
-            }
-        });
-
-        itemIdEntered.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                id = itemIdEntered.getText().toString();
-                Log.d(TAG,"!@#$%^&*"+ id);
-
-            }
-        });
-
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG,"item id "+id);
-             itemDBoperation.deleteItem(Long.parseLong(id));
-                adapter.notifyDataSetChanged();
             }
         });
 

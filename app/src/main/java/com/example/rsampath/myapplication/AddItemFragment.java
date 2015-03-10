@@ -19,17 +19,17 @@ import java.util.ArrayList;
 
 public class AddItemFragment extends Fragment {
 
-    public interface onSomeEventListener {
-        public void someEvent(ArrayList<ItemObject> newObj);
+    public interface addItemEventListener {
+        public void addItemEvent(ArrayList<ItemObject> newObj);
     }
 
-    onSomeEventListener someEventListener;
+    addItemEventListener addItemEventListener;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            someEventListener = (onSomeEventListener) activity;
+            addItemEventListener = (addItemEventListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement onSomeEventListener");
         }
@@ -72,7 +72,7 @@ public class AddItemFragment extends Fragment {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                someEventListener.someEvent(newItems);
+                addItemEventListener.addItemEvent(newItems);
                 FragmentManager fm = getFragmentManager();
                     fm.popBackStack();
             }

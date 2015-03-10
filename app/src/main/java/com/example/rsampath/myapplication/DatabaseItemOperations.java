@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemOperations {
+public class DatabaseItemOperations {
 
     // Database fields
     private DataBaseWrapper dbHelper;
@@ -21,7 +21,7 @@ public class ItemOperations {
     DataBaseWrapper.ITEM_PRICE};
     private SQLiteDatabase database;
 
-    public ItemOperations(Context context) {
+    public DatabaseItemOperations(Context context) {
         dbHelper = new DataBaseWrapper(context);
     }
 

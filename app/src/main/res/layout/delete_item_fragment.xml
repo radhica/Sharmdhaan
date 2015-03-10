@@ -5,43 +5,18 @@
     android:background="@android:color/white"
     android:orientation="vertical" >
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Enter item to delete"
-        />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/enteredId"/>
-
     <ListView
         android:id="@+id/list_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         />
-    <LinearLayout
-        android:id="@+id/exit_container"
-        android:layout_width="match_parent"
-        android:layout_height="61dp"
-        android:orientation="horizontal">
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/deleteButton"
-            android:text="Delete"
-            />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/closeButton"
-            android:text="Close"
-            />
-        </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/closeButton"
+        android:text="Close"
+        />
 </LinearLayout>

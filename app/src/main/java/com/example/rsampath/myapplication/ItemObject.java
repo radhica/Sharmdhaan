@@ -14,6 +14,7 @@ public class ItemObject implements Parcelable {
     private long quantity = 0;
     private double value;
     private int id;
+    private boolean selected;
 
     public ItemObject() {
 
@@ -28,6 +29,17 @@ public class ItemObject implements Parcelable {
     public ItemObject(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public ItemObject(boolean selected, String name) {
+        this.selected = selected;
+        this.name = name;
+    }
+
+    public ItemObject(String name, int id, boolean selected) {
+        this.name = name;
+        this.id = id;
+        this.selected = selected;
     }
 
     public long getId() {
@@ -67,6 +79,14 @@ public class ItemObject implements Parcelable {
 
     public void setValue(double value) {
         this.value = value;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
 

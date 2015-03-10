@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity implements AddItemFragment.onSomeEventListener {
+public class MainActivity extends ActionBarActivity implements AddItemFragment.addItemEventListener, DeleteItemFragment.deleteItemEventListener {
 
     private static final String TAG = MainActivity.class.getCanonicalName();
     private ListView mDrawerList;
@@ -35,10 +35,10 @@ public class MainActivity extends ActionBarActivity implements AddItemFragment.o
     protected EditText given;
     protected TextView change;
 
-    public ItemListAdapter adapter;
+    public AddItemAdapter adapter;
     ArrayList<ItemObject> arrayListOfPayment = new ArrayList<>();
 
-    private ItemOperations itemDBoperation;
+    private DatabaseItemOperations itemDBoperation;
 
 
 
@@ -66,7 +66,7 @@ public class MainActivity extends ActionBarActivity implements AddItemFragment.o
 //
 //        this.getActionBar().setCustomView(v);
 
-        itemDBoperation = new ItemOperations(this);
+        itemDBoperation = new DatabaseItemOperations(this);
         itemDBoperation.open();
 
 
@@ -181,7 +181,7 @@ public class MainActivity extends ActionBarActivity implements AddItemFragment.o
     }
 
     private void setupListViewAdapter() {
-        adapter = new ItemListAdapter(MainActivity.this, R.layout.list_item_row, arrayListOfPayment,total,given,change);
+        adapter = new AddItemAdapter(MainActivity.this, R.layout.list_item_row, arrayListOfPayment,total,given,change);
         ListView atomPaysListView = (ListView)findViewById(R.id.EnterPays_atomPaysList);
         atomPaysListView.setAdapter(adapter);
     }
@@ -206,7 +206,7 @@ public class MainActivity extends ActionBarActivity implements AddItemFragment.o
                 adapter.givenAmount.setText("0.0");
                 adapter.totalamount.setText("0.0");
                 adapter.changeAmount.setText("0.0");
-                ItemListAdapter.total = 0.0;
+                AddItemAdapter.total = 0.0;
                 for(int i = 0; i<adapter.items.size();i++)
                     adapter.items.get(i).setQuantity(0);
                 for(ItemObject itemObject : arrayListOfPayment)
@@ -224,7 +224,7 @@ public class MainActivity extends ActionBarActivity implements AddItemFragment.o
 
 
     @Override
-    public void someEvent(ArrayList<ItemObject> newObj) {
+    public void addItemEvent(ArrayList<ItemObject> newObj) {
         Log.d(TAG, "New" + newObj.size());
         Log.d(TAG, "Cur" + arrayListOfPayment.size());
         int success = itemDBoperation.deleteAll();
@@ -252,6 +252,14 @@ public class MainActivity extends ActionBarActivity implements AddItemFragment.o
     }
 
 
-
-
+    @Override
+    public void deleteItemEvent(ArrayList<ItemObject> idList) {
+        Log.d(TAG,""+idList.size());
+        for(ItemObject newItemObj : idList) {
+            itemDBoperation.deleteItem(newItemObj.getId());
+            arrayListOfPayment.remove(newItemObj);
+            Log.d(TAG,""+newItemObj.getId());
+        }
+        adapter.notifyDataSetChanged();
+    }
 }
