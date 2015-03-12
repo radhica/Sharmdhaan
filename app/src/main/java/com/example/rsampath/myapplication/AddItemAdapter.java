@@ -98,24 +98,33 @@ public class AddItemAdapter extends ArrayAdapter<ItemObject> {
         });
 
         givenAmount.addTextChangedListener(new TextWatcher() {
+            double beforeGiven = 0.0;
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-
+                Log.d(LOG_TAG,givenAmount.getText().toString());
+//                Log.d(LOG_TAG,String.valueOf(Double.valueOf(givenAmount.getText().toString())-Double.valueOf(changeAmount.getText().toString())));
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-
+                Log.d(LOG_TAG,"On: "+givenAmount.getText().toString());
+                if(givenAmount.getText().toString().equals(""))
+                    beforeGiven = 0.0;
+                else
+                beforeGiven = Double.valueOf(givenAmount.getText().toString());
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 Double amtGiven = 0.0;
                 Double amtTotal = Double.valueOf(totalamount.getText().toString());
-                if(givenAmount.getText().toString().equals(""))
+                if(givenAmount.getText().toString().equals("") && beforeGiven == 0.0)
                     amtGiven = 0.0;
+                else if(beforeGiven > 0.0)
+                    amtGiven = beforeGiven;
                 else
                 amtGiven = Double.valueOf(givenAmount.getText().toString());
+
                 if (amtGiven > 0.0)
                     changeAmount.setText(String.valueOf(amtGiven-amtTotal));
             }
@@ -129,7 +138,6 @@ public class AddItemAdapter extends ArrayAdapter<ItemObject> {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-
             }
 
             @Override
@@ -142,6 +150,7 @@ public class AddItemAdapter extends ArrayAdapter<ItemObject> {
                     changeAmount.setText(String.valueOf(amtGiven-amtTotal));
             }
         });
+
 
 
         return row;

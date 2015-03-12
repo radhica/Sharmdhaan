@@ -50,8 +50,10 @@
                 android:hint="Amount paid"
                 android:gravity="right"
                 android:padding="5dp"
+                android:textSize="8pt"
                 android:textColor="#FFFFFF"
                 android:inputType="numberDecimal"
+                style="@style/EditTextAppTheme"
                 android:imeOptions="actionDone">
                 <requestFocus />
             </EditText>
@@ -66,11 +68,14 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="100px"
+
                 android:layout_weight="1"
+                android:textSize="8pt"
+
                 android:id="@+id/change"
                 android:hint="Change"
                 android:gravity="right"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:textColor="#FFFFFF"
                 />
 
@@ -83,7 +88,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:weightSum="5">
+            android:weightSum="7">
 
             <TextView
                 android:layout_width="0dp"
@@ -91,14 +96,15 @@
                 android:text="ITEM"
                 android:textStyle="bold"
                 android:gravity="center|left"
-                android:layout_weight="1"/>
+                android:layout_weight="3"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="QUANTITY"
+                android:text="QTY"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:layout_weight="2"/>
+                android:paddingLeft="4dp"
+                android:layout_weight="1"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -106,16 +112,15 @@
                 android:text="ADD"
                 android:textStyle="bold"
                 android:gravity="center"
-
-                android:layout_weight="1"/>
+                android:paddingLeft="20dp"
+                android:layout_weight="1.5" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="REMOVE"
                 android:gravity="center"
-
                 android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:layout_weight="1.5"/>
 
             </LinearLayout>
 

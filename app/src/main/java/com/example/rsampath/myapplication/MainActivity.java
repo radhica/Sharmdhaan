@@ -105,7 +105,6 @@ public class MainActivity extends ActionBarActivity implements AddItemFragment.a
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
                 mDrawerLayout.closeDrawers();
                 FragmentManager fragmentManager = getFragmentManager();
                 Bundle bundle = new Bundle();
