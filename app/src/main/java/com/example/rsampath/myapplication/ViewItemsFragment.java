@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -39,6 +40,10 @@ public class ViewItemsFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater,ViewGroup container, Bundle args) {
         View view = inflater.inflate(R.layout.view_items_fragment, container, false);
+
+        getActivity().getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+        );
 
         itemDBoperation = new DatabaseItemOperations(getActivity());
         itemDBoperation.open();

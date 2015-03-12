@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -215,10 +216,14 @@ public class MainActivity extends ActionBarActivity implements AddItemFragment.a
                         .show();
                 total.setText("0.0");
                 given.setText("0.0");
+                given.setHint("Amount Paid");
                 change.setText("");
+                change.setHint("Change");
                 adapter.givenAmount.setText("0.0");
+                adapter.givenAmount.setHint("Amount Paid");
                 adapter.totalamount.setText("0.0");
                 adapter.changeAmount.setText("0.0");
+                adapter.changeAmount.setHint("Change");
                 AddItemAdapter.total = 0.0;
                 for(int i = 0; i<adapter.items.size();i++)
                     adapter.items.get(i).setQuantity(0);

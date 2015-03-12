@@ -77,6 +77,7 @@ public class AddItemFragment extends Fragment {
                     Double itemNewPriceDouble = Double.parseDouble(itemNewPrice);
                     newItems.add(new ItemObject(itemNewName, 0, itemNewPriceDouble));
                     containerF.addView(addView);
+                    itemEdit.requestFocus();
                 }
                 else Toast.makeText(getActivity(),"Enter valid details",Toast.LENGTH_LONG).show();
 

@@ -90,11 +90,11 @@ public class ItemObject implements Parcelable {
     }
 
 
-    public double increment(){
+    public long increment(){
         return ++quantity;
     }
 
-    public double decrement(){
+    public long decrement(){
         return  --quantity;
     }
 

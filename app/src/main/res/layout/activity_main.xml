@@ -26,6 +26,10 @@
             android:background="#167ABF"
             android:textColor="#FFFFFF"
             android:text="0.0"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             />
 
         <LinearLayout
@@ -44,13 +48,20 @@
                 android:layout_weight="1"
                 android:id="@+id/given"
                 android:hint="Amount paid"
-                android:text="0.0"
                 android:gravity="right"
                 android:padding="5dp"
                 android:textColor="#FFFFFF"
                 android:inputType="numberDecimal"
+                android:imeOptions="actionDone">
+                <requestFocus />
+            </EditText>
 
-                />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:background="#ffffff"
+                android:layout_marginLeft="5dp"/>
+
 
             <TextView
                 android:layout_width="0dp"
@@ -65,10 +76,55 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/change_container"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:weightSum="5">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="ITEM"
+                android:textStyle="bold"
+                android:gravity="center|left"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="QUANTITY"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_weight="2"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="ADD"
+                android:textStyle="bold"
+                android:gravity="center"
+
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="REMOVE"
+                android:gravity="center"
+
+                android:textStyle="bold"
+                android:layout_weight="1"/>
+
+            </LinearLayout>
+
+
         <ListView
             android:id="@+id/EnterPays_atomPaysList"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             tools:listitem="@layout/list_item_row"
             android:layout_below="@id/change_container" >
 

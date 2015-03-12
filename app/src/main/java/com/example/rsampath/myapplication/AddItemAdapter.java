@@ -71,7 +71,7 @@ public class AddItemAdapter extends ArrayAdapter<ItemObject> {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double quantity = holder.atomPayment.increment();
+                long quantity = holder.atomPayment.increment();
                 holder.quantity.setText(String.valueOf(quantity));
                 total += holder.atomPayment.getValue();
                 totalamount.setText(String.valueOf(total));
@@ -85,7 +85,7 @@ public class AddItemAdapter extends ArrayAdapter<ItemObject> {
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double quantity = holder.atomPayment.decrement();
+                long quantity = holder.atomPayment.decrement();
                 if (quantity >= 0) {
                     total -= holder.atomPayment.getValue();
                     holder.quantity.setText(String.valueOf(quantity));
@@ -112,7 +112,7 @@ public class AddItemAdapter extends ArrayAdapter<ItemObject> {
             public void afterTextChanged(Editable editable) {
                 Double amtGiven = 0.0;
                 Double amtTotal = Double.valueOf(totalamount.getText().toString());
-                if(Double.valueOf(givenAmount.getText().toString()).equals(""))
+                if(givenAmount.getText().toString().equals(""))
                     amtGiven = 0.0;
                 else
                 amtGiven = Double.valueOf(givenAmount.getText().toString());
@@ -136,7 +136,7 @@ public class AddItemAdapter extends ArrayAdapter<ItemObject> {
             public void afterTextChanged(Editable editable) {
                 Double amtGiven = 0.0;
                 Double amtTotal = Double.valueOf(totalamount.getText().toString());
-                if(Double.valueOf(givenAmount.getText().toString()).equals(""))
+                if(givenAmount.getText().toString().equals(""))
                     amtGiven = 0.0;
                 if (amtGiven > 0.0)
                     changeAmount.setText(String.valueOf(amtGiven-amtTotal));
